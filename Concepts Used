@@ -1,10 +1,13 @@
-	Control Statements (if, if-else, switch)
-	Loop Statements (while/do while, for)
-	Arrays (1D/2D-arrays)
-	Strings (Strings and Table of strings) and its functions (strcpy, strcmp)
-	Functions (Any type of user defined functions)
-	Structure (structures and nested structures)
-	Pointers (pointer to strings and pointers to structures)
-	Dynamic Memory Allocation (malloc/ calloc/ realloc)
-	Files(formatted files)
-
+Structures (struct)
+Functions
+Loops (for, while)
+Conditional Statements (if, else if, else)
+Switch-Case
+Input/Output (scanf, printf)
+Arithmetic Operations
+Nested Menus
+Function Return with struct
+Global and Local Variables
+Modularity and Code Reusability
+GST/Tax Calculation
+Dynamic Quantity & Price Handling
