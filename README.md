@@ -4,4 +4,6 @@ The project "MOVIE SNACK BILLING SYSTEM" is a basic program used in movie theatr
 The system is named as Movie snack billing. This is designed especially for a canteen section which wants to attend their customer in a very well manner. This system has a capability to give the receipt, in which GST also included, to the customers.
 This project is about writing a code to print the bill when an item is being purchased in movie theatre Popcorn, cold beverages, fries, sandwich and hamburgers are few examples of various culinary options available. The client can select any quantity of any size. Given is a list of food item with extensive information.
 
-Project Weblink:[🖥️ View C Project on OnlineGDB](https://onlinegdb.com/5G8xlJRXPS)
+Project Weblink:[🖥️ View C Project on OnlineGDB](https://www.onlinegdb.com/edit/vzEl1Ua4L)
+
+Note: This is the latest cleaned version of my Movie Snack Billing System project. The version linked in my resume was an earlier draft made during my first year.
