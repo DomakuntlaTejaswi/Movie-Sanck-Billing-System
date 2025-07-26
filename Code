@@ -1,9 +1,17 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Login credentials
+#define USERNAME "admin"
+#define PASSWORD "1234"
 
 struct stock {
-    int p_stock, b_stock, f_stock, c_stock;
+    int small_p, medium_p, large_p;
+    int small_b, medium_b, large_b;
+    int small_f, medium_f, large_f;
+    int small_c, medium_c, large_c;
 } g;
 
 struct customer {
@@ -11,94 +19,155 @@ struct customer {
 } f;
 
 struct bill {
-    char name[50];
-    int qty1;
-    int qty2;
-    int qty3;
-    int qty4;
-    int P_price;
-    int B_price;
-    int F_price;
-    int C_price;
+    int qty1, qty2, qty3, qty4;
+    int P_price, B_price, F_price, C_price;
     float net_price;
 } s;
 
+// Function to login
+int login() {
+    char user[20], pass[20];
+    printf("\n===== LOGIN =====\n");
+    printf("Username: ");
+    scanf("%s", user);
+    printf("Password: ");
+    scanf("%s", pass);
+    if (strcmp(user, USERNAME) == 0 && strcmp(pass, PASSWORD) == 0) {
+        printf("Login successful!\n\n");
+        return 1;
+    } else {
+        printf("Invalid credentials! Exiting...\n");
+        return 0;
+    }
+}
+
 void update_stock() {
-    printf("Enter new stock quantities:\n");
-    printf("Popcorn stock: ");
-    scanf("%d", &g.p_stock);
-    printf("Beverage stock: ");
-    scanf("%d", &g.b_stock);
-    printf("Fries stock: ");
-    scanf("%d", &g.f_stock);
-    printf("Coffee stock: ");
-    scanf("%d", &g.c_stock);
+    FILE *fp = fopen("stock.txt", "w");
+    printf("Enter new stock quantities (S=Small, M=Medium, L=Large):\n");
+
+    printf("Popcorn (S M L): ");
+    scanf("%d%d%d", &g.small_p, &g.medium_p, &g.large_p);
+    printf("Beverage (S M L): ");
+    scanf("%d%d%d", &g.small_b, &g.medium_b, &g.large_b);
+    printf("Fries (S M L): ");
+    scanf("%d%d%d", &g.small_f, &g.medium_f, &g.large_f);
+    printf("Coffee (S M L): ");
+    scanf("%d%d%d", &g.small_c, &g.medium_c, &g.large_c);
+
+    fprintf(fp, "Popcorn %d %d %d\n", g.small_p, g.medium_p, g.large_p);
+    fprintf(fp, "Beverage %d %d %d\n", g.small_b, g.medium_b, g.large_b);
+    fprintf(fp, "Fries %d %d %d\n", g.small_f, g.medium_f, g.large_f);
+    fprintf(fp, "Coffee %d %d %d\n", g.small_c, g.medium_c, g.large_c);
+
+    fclose(fp);
     printf("Stock updated successfully!\n\n");
 }
 
 void view_stock() {
     printf("\n===== CURRENT STOCK =====\n");
-    printf("Popcorn: %d\n", g.p_stock);
-    printf("Beverage: %d\n", g.b_stock);
-    printf("Fries: %d\n", g.f_stock);
-    printf("Coffee: %d\n", g.c_stock);
-    printf("=========================\n\n");
+    printf("Popcorn (S/M/L): %d/%d/%d\n", g.small_p, g.medium_p, g.large_p);
+    printf("Beverage (S/M/L): %d/%d/%d\n", g.small_b, g.medium_b, g.large_b);
+    printf("Fries (S/M/L): %d/%d/%d\n", g.small_f, g.medium_f, g.large_f);
+    printf("Coffee (S/M/L): %d/%d/%d\n", g.small_c, g.medium_c, g.large_c);
+    printf("==========================\n\n");
 }
 
 struct bill popcorn(struct bill s) {
-    int size1, i, price = 0;
+    int qty, size, i, price = 0;
     printf("Enter no. of popcorn items: ");
-    scanf("%d", &s.qty1);
-    for(i = 0; i < s.qty1; i++) {
-        printf("Enter size of popcorn %d (1=Small, 2=Medium, 3=Large): ", i + 1);
-        scanf("%d", &size1);
-        if(size1 == 1) price += 50;
-        else if(size1 == 2) price += 80;
-        else if(size1 == 3) price += 100;
+    scanf("%d", &qty);
+    for (i = 0; i < qty; i++) {
+        printf("Size of popcorn %d (1=S, 2=M, 3=L): ", i+1);
+        scanf("%d", &size);
+        if ((size == 1 && g.small_p == 0) || (size == 2 && g.medium_p == 0) || (size == 3 && g.large_p == 0)) {
+            printf("Out of stock for selected size!\n");
+            continue;
+        }
+        if (size == 1) { price += 50; g.small_p--; }
+        else if (size == 2) { price += 80; g.medium_p--; }
+        else if (size == 3) { price += 100; g.large_p--; }
     }
-    s.P_price = price + (price * 0.18);
-    g.p_stock -= s.qty1;
+    s.qty1 += qty;
+    s.P_price += price + (price * 0.18);
     return s;
 }
 
 struct bill beverage(struct bill s) {
+    int qty, size, i, price = 0;
     printf("Enter no. of beverages: ");
-    scanf("%d", &s.qty2);
-    s.B_price = (s.qty2 * 40) + (s.qty2 * 40 * 0.18);
-    g.b_stock -= s.qty2;
+    scanf("%d", &qty);
+    for (i = 0; i < qty; i++) {
+        printf("Size of beverage %d (1=S, 2=M, 3=L): ", i+1);
+        scanf("%d", &size);
+        if ((size == 1 && g.small_b == 0) || (size == 2 && g.medium_b == 0) || (size == 3 && g.large_b == 0)) {
+            printf("Out of stock for selected size!\n");
+            continue;
+        }
+        if (size == 1) { price += 40; g.small_b--; }
+        else if (size == 2) { price += 60; g.medium_b--; }
+        else if (size == 3) { price += 80; g.large_b--; }
+    }
+    s.qty2 += qty;
+    s.B_price += price + (price * 0.18);
     return s;
 }
 
 struct bill fries(struct bill s) {
+    int qty, size, i, price = 0;
     printf("Enter no. of fries: ");
-    scanf("%d", &s.qty3);
-    s.F_price = (s.qty3 * 60) + (s.qty3 * 60 * 0.18);
-    g.f_stock -= s.qty3;
+    scanf("%d", &qty);
+    for (i = 0; i < qty; i++) {
+        printf("Size of fries %d (1=S, 2=M, 3=L): ", i+1);
+        scanf("%d", &size);
+        if ((size == 1 && g.small_f == 0) || (size == 2 && g.medium_f == 0) || (size == 3 && g.large_f == 0)) {
+            printf("Out of stock for selected size!\n");
+            continue;
+        }
+        if (size == 1) { price += 60; g.small_f--; }
+        else if (size == 2) { price += 90; g.medium_f--; }
+        else if (size == 3) { price += 120; g.large_f--; }
+    }
+    s.qty3 += qty;
+    s.F_price += price + (price * 0.18);
     return s;
 }
 
 struct bill coffee(struct bill s) {
+    int qty, size, i, price = 0;
     printf("Enter no. of coffees: ");
-    scanf("%d", &s.qty4);
-    s.C_price = (s.qty4 * 70) + (s.qty4 * 70 * 0.18);
-    g.c_stock -= s.qty4;
+    scanf("%d", &qty);
+    for (i = 0; i < qty; i++) {
+        printf("Size of coffee %d (1=S, 2=M, 3=L): ", i+1);
+        scanf("%d", &size);
+        if ((size == 1 && g.small_c == 0) || (size == 2 && g.medium_c == 0) || (size == 3 && g.large_c == 0)) {
+            printf("Out of stock for selected size!\n");
+            continue;
+        }
+        if (size == 1) { price += 70; g.small_c--; }
+        else if (size == 2) { price += 90; g.medium_c--; }
+        else if (size == 3) { price += 110; g.large_c--; }
+    }
+    s.qty4 += qty;
+    s.C_price += price + (price * 0.18);
     return s;
 }
 
 void bill_display(struct bill s, struct customer f) {
-    printf("\n================ FINAL BILL ================\n");
+    printf("\n========= FINAL BILL =========\n");
     printf("Customer Name: %s\n", f.name);
     if (s.qty1 > 0) printf("Popcorn Total: %d\n", s.P_price);
     if (s.qty2 > 0) printf("Beverage Total: %d\n", s.B_price);
     if (s.qty3 > 0) printf("Fries Total: %d\n", s.F_price);
     if (s.qty4 > 0) printf("Coffee Total: %d\n", s.C_price);
-    printf("------------------------------------------\n");
+    printf("-------------------------------\n");
     s.net_price = s.P_price + s.B_price + s.F_price + s.C_price;
     printf("Net Payable: %.2f\n", s.net_price);
-    printf("==========================================\n");
+    printf("===============================\n");
 }
 
 int main() {
+    if (!login()) return 0;
+
     int option, sub_option;
     while(1) {
         printf("\n===== MOVIE SNACK BILLING SYSTEM =====\n");
@@ -112,8 +181,8 @@ int main() {
             case 1:
                 printf("\n1. View Stock\n2. Update Stock\nChoose: ");
                 scanf("%d", &sub_option);
-                if(sub_option == 1) view_stock();
-                else if(sub_option == 2) update_stock();
+                if (sub_option == 1) view_stock();
+                else if (sub_option == 2) update_stock();
                 else printf("Invalid input!\n");
                 break;
 
