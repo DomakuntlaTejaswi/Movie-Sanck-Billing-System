@@ -1,8 +1,33 @@
-# Movie-Sanck-Billing-System
+## 📌 Project Overview
+The **Movie Snack Billing System** is a C-based console application that helps manage **stock** and **billing** for snacks sold in a movie theatre.  
+It includes **admin login**, **stock management**, and **automated billing with GST**.
 
-The project "MOVIE SNACK BILLING SYSTEM" is a basic program used in movie theatre. The main aim is to perform the process of ordering and billing of canteen section in theatre.
-The system is named as Movie snack billing. This is designed especially for a canteen section which wants to attend their customer in a very well manner. This system has a capability to give the receipt, in which GST also included, to the customers.
-This project is about writing a code to print the bill when an item is being purchased in movie theatre Popcorn, cold beverages, fries, sandwich and hamburgers are few examples of various culinary options available. The client can select any quantity of any size. Given is a list of food item with extensive information.It allows the user to manage snack stock, perform billing based on item size and quantity, and generate a final bill for the customer. It includes a login system, stock management, and GST-based price calculation.
+This project is perfect for beginners learning:
+- Structures in C
+- File handling
+- Menu-driven programming
+- Conditional logic & loops
+- Basic stock management logic
+
+---
+
+## 🎯 Features
+- **Login System**: Only admin can access
+- **Stock Management**:
+  - View available stock
+  - Update stock quantities
+- **Billing System**:
+  - Add multiple items to bill
+  - Sizes: Small, Medium, Large
+  - Automatic GST (18%) calculation
+  - Generates final bill
+- **Persistent Storage**: Stock saved to `stock.txt`
+
+---
+
+## 🛠 Technologies Used
+- **Language**: C
+- **Compiler**: GCC / MinGW / Turbo
 
 
 
