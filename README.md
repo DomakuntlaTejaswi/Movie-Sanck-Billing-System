@@ -1,5 +1,5 @@
 ## 📌 Project Overview
-The **Theater Billing System** is a C-based console application that helps manage **stock** and **billing** for snacks sold in a movie theatre.  
+The **Movie Snack Billing System** is a C-based console application that helps manage **stock** and **billing** for snacks sold in a movie theatre.  
 It includes **admin login**, **stock management**, and **automated billing with GST**.
 
 This project is perfect for beginners learning:
